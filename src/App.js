@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 
+//Creates each square on the Board
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -9,21 +10,29 @@ function Square({ value, onSquareClick }) {
   );
 }
 
+//Main Board
 function Board() {
+  //To keep track of palyers X and O
   const [xIsNext, setXIsNext] = useState(true);
+
+  //To keep track of values inside each square
   const [squares, setSquares] = useState(Array(9).fill(null));
 
+  //Function to update squares
   const handleClick = (i) => {
     const updatedSquares = [...squares];
+    //Checks weather the square to be clicked is empty or is already a winner
     if (squares[i] || checkWinner(squares)) {
       return;
     }
+    
     if (xIsNext) {
       updatedSquares[i] = "X";
     } else {
       updatedSquares[i] = "O";
     }
     setSquares(updatedSquares);
+    //To switch between users X and O
     setXIsNext(!xIsNext);
   };
 
@@ -104,6 +113,8 @@ function Board() {
   );
 }
 
+
+//Function to check winner return null if no winner found 
 const checkWinner = (squares) => {
   const winningCombinations = [
     [0, 1, 2],
